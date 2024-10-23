@@ -21,8 +21,8 @@ POST /print  - точка  входа для печати.  Учетная пр�
 
 
 ### Работа с весами
-POST /weight  
-content-type: application/json  
+ POST /weight   
+ content-type: application/json   
  {  
     "posid":1   //id pos терминала  или кассового места   
  } 
@@ -32,12 +32,28 @@ content-type: application/json
     "success":true,  
     "weight":1.6    //вес     
  } 
+ или  
+ {  
+    "success":false,  
+    "error":"invalid data"    //текст ошибки     
+ } 
 
 
  ### Банковский  терминал  
- TODO    
-
-
- ### Клиент-банк
- TODO   
+ POST /bankpay   
+ content-type: application/json   
+ {  
+    "amount":1.5   //сумма
+ } 
  
+ ответ  
+ {  
+    "success":true,  
+    "tranid":"ID345654"    //номер банковской  транзакции
+ }    
+  или  
+ {  
+    "success":false,  
+    "error":"invalid data"    //текст ошибки     
+ } 
+
