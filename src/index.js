@@ -12,14 +12,14 @@ var port = config.port
 var host = config.host
 
  
-
+ 
 const device  = new escpos.USB();
 
-const options = { encoding: "866" /* default */ }
+const options = { encoding: "866"   }
 
 const printer = new escpos.Printer(device, options);
-
-var urlencodedParser = bodyParser.text({})
+ 
+var urlencodedParser = bodyParser.json({})
 
 const app = express();
 app.use(cors({
@@ -79,6 +79,74 @@ app.post('/check', urlencodedParser, function (request, response) {
 	 }  
    
 	   });
+
+	   app.post('/print', urlencodedParser, function (request, response) { 
+	
+		//var res = JSON.parse( request.body)
+ var res= request.body
+  try { 
+		 device.open(function(err){
+	 
+		 device.write(Buffer.from(res))  
+  
+		  
+	   printer.close();
+	   response.statusCode = 200;
+	   response.send("")
+ 
+	
+ }); 
+ 
+ } catch (ex) {
+	 response.statusCode = 400;
+ 
+	 response.send(ex.message)
+	 console.log(ex.message)
+   }  
+ 
+	 });
+
+	 
+
+	 app.post('/weight', urlencodedParser, function (request, response) { 
+	
+	 
+
+	//	var reqdata = JSON.parse( request.body)
+        
+  try { 
+		 //todo весы 
+        var resp= 
+		{
+			"weight":1,
+			"success":true
+		}
+		
+		  
+	 
+	   response.statusCode = 200;
+	   response.send(JSON.stringify(resp))
+ 
+	
+  
+ 
+ } catch (ex) {
+	 console.log(ex.message)
+	
+	 response.statusCode = 400;
+	 var resp= 
+	 {
+		 "success":false,
+		 "error":ex.message
+	 }
+	  
+	 response.send(FSON.stringify(resp))
+	
+   }  
+ 
+	 });
+ 
+
 
     app.listen(port, host, function () {
         console.log(`Server listens http://${host}:${port}`)
