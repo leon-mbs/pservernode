@@ -33,32 +33,17 @@ app.use(cors({
  
 
 
-app.post('/print', urlencodedParser, function (request, response) { 
-	
-       var res = JSON.parse( request.body)
-
- try { 
-		device.open(function(err){
+app.post('/check', urlencodedParser, function (request, response) { 
     
-        device.write(Buffer.from(res))  
  
-		 
-	  printer.close();
-	  response.statusCode = 200;
-	  response.send("")
+      response.statusCode = 200;
+      response.send("POS server: OK")
 
-   
-}); 
+ 
 
-} catch (ex) {
-	console.log(ex.message)
-    response.statusCode = 400;
-
-	response.send(ex.message)
-	
-  }  
-
-	});
+    });
+    
+    
 
 
 	app.get('/testprint', urlencodedParser, function (request, response) { 
