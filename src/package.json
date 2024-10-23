@@ -1,0 +1,24 @@
+{
+  "name": "pserver",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "escpos": "^2.5.0",
+    "express": "^4.16.4",
+    "iconv-lite": "^0.5.0",
+    "node-thermal-printer": "^4.1.0",
+    "node-thermal-printer-roobee": "^2.0.0",
+    "serialport": "^10.5.0",
+    "usb": "1.9.2"
+  },
+  "scripts": {
+    "debug": "nodemon  ./index.js",
+    "start": "node ./index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
