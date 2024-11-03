@@ -33,7 +33,7 @@ app.use(cors({
  
 
 
-app.post('/check', urlencodedParser, function (request, response) { 
+app.get('/check', urlencodedParser, function (request, response) { 
     
  
       response.statusCode = 200;
@@ -44,23 +44,52 @@ app.post('/check', urlencodedParser, function (request, response) {
     });
     
     
+     app.get('/testprint', urlencodedParser, function (request, response) { 
+   
+    try { 
+           device.open(function(err){
+        
+         //  device.write(Buffer.from([27,116,17]))  //раскоментировать для переключения  кодовой  страницы  в  принтере
+           
+           
+       
+           printer.align("lt")
+           printer.size(1,1)
+           printer.text("Printer test")       
+             
+ 
+           printer.feed()       
+            
+              printer.close();
+          console.log("Test printer")
+          response.statusCode = 200;
+          response.send("Тест принтера") 
+   
+      
+   }); 
+   
+   } catch (ex) {
+       console.log(ex.message)
+       response.statusCode = 400;
+   
+       response.send(ex.message)
+       
+     }  
+   
+       });
 
 
-	app.get('/testprint', urlencodedParser, function (request, response) { 
+	app.get('/testprintlabel', urlencodedParser, function (request, response) { 
    
 	try { 
 		   device.open(function(err){
 	    
-	       device.write(Buffer.from([27,116,17]))  //раскоментировать для переключения  кодовой  страницы  в  принтере
-		   
-		   
-		   printer.encode('866')
-		   printer.align("lt")
-		   printer.size(1,1)
-		   printer.text("Printer test")	   
-		   printer.text("Тест принтера")	   
- 
-		   printer.feed()	   
+	    
+           printer.text("CLS")       
+           printer.text("DIRECTION 1")       
+           printer.text("TEXT 10,10,\"2\",0,1,1,\"Test printer\"")       
+		   printer.text("RINT 1,1")	   
+ 		     
 			
    	 	  printer.close();
           console.log("Test printer")
@@ -79,8 +108,8 @@ app.post('/check', urlencodedParser, function (request, response) {
 	 }  
    
 	   });
-
-	   app.post('/print', urlencodedParser, function (request, response) { 
+   
+    app.post('/print', urlencodedParser, function (request, response) { 
 	
 		//var res = JSON.parse( request.body)
  var res= request.body
@@ -108,41 +137,41 @@ app.post('/check', urlencodedParser, function (request, response) {
 
 	 
 
-	 app.post('/weight', urlencodedParser, function (request, response) { 
+	 app.get('/scale', urlencodedParser, function (request, response) { 
 	
 	 
 
-	//	var reqdata = JSON.parse( request.body)
-        
-  try { 
-		 //todo весы 
-        var resp= 
-		{
-			"weight":1,
-			"success":true
-		}
-		
-		  
-	 
-	   response.statusCode = 200;
-	   response.send(JSON.stringify(resp))
- 
-	
-  
- 
- } catch (ex) {
-	 console.log(ex.message)
-	
-	 response.statusCode = 400;
-	 var resp= 
-	 {
-		 "success":false,
-		 "error":ex.message
-	 }
-	  
-	 response.send(FSON.stringify(resp))
-	
-   }  
+	    //	var reqdata = JSON.parse( request.body)
+            
+      try { 
+		     //todo весы 
+            var resp= 
+		    {
+			    "weight":0,
+			    "success":true
+		    }
+		    
+		      
+	     
+	       response.statusCode = 200;
+	       response.send(JSON.stringify(resp))
+     
+	    
+      
+     
+     } catch (ex) {
+	     console.log(ex.message)
+	    
+	     response.statusCode = 400;
+	     var resp= 
+	     {
+		     "success":false,
+		     "error":ex.message
+	     }
+	      
+	     response.send(FSON.stringify(resp))
+	    
+       }  
  
 	 });
  
