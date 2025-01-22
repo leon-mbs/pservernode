@@ -33,7 +33,7 @@ app.use(cors({
  
 
 
-app.get('/check', urlencodedParser, function (request, response) { 
+    app.get('/check', urlencodedParser, function (request, response) { 
     
  
       response.statusCode = 200;
@@ -44,7 +44,7 @@ app.get('/check', urlencodedParser, function (request, response) {
     });
     
     
-     app.get('/testprint', urlencodedParser, function (request, response) { 
+    app.get('/testprint', urlencodedParser, function (request, response) { 
    
     try { 
            device.open(function(err){
@@ -137,7 +137,7 @@ app.get('/check', urlencodedParser, function (request, response) {
 
 	 
 
-	 app.get('/scale', urlencodedParser, function (request, response) { 
+	app.get('/scale', urlencodedParser, function (request, response) { 
 	
 	 
 
@@ -169,7 +169,7 @@ app.get('/check', urlencodedParser, function (request, response) {
 		     "error":ex.message
 	     }
 	      
-	     response.send(FSON.stringify(resp))
+	     response.send(JSON.stringify(resp))
 	    
        }  
  
